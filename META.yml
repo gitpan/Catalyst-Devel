@@ -9,15 +9,15 @@ no_index:
     - inc
     - t
 requires: 
-  Catalyst: 5.66
-  Catalyst::Action::RenderView: 0
+  Catalyst: 5.7000
+  Catalyst::Action::RenderView: 0.04
   Catalyst::Plugin::ConfigLoader: 0
-  Catalyst::Plugin::Static::Simple: 0
+  Catalyst::Plugin::Static::Simple: 0.14
   Class::Accessor::Fast: 0
   File::Copy::Recursive: 0
-  Module::Install: 0.62
+  Module::Install: 0.63
   Path::Class: 0.09
   Template: 2.14
   YAML: 0.55
   perl: 5.8.1
-version: 0.99_01
+version: 1.00

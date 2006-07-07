@@ -16,7 +16,6 @@ use Catalyst::Exception;
 
 my %cache;
 
-our $VERSION = '1.00';
 
 =head1 NAME
 
@@ -28,7 +27,7 @@ See L<Catalyst::Manual::Intro>
 
 =head1 DESCRIPTION
 
-Bootstrap a Catalyst application. Autogenerates scripts
+Bootstrap a Catalyst application. Autogenerates scripts.
 
 =head2 METHODS
 
