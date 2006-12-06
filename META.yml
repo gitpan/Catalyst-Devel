@@ -11,6 +11,7 @@ no_index:
 requires: 
   Catalyst: 5.7000
   Catalyst::Action::RenderView: 0.04
+  Catalyst::Manual: 5.7000
   Catalyst::Plugin::ConfigLoader: 0
   Catalyst::Plugin::Static::Simple: 0.14
   Class::Accessor::Fast: 0
@@ -19,5 +20,4 @@ requires:
   Path::Class: 0.09
   Template: 2.14
   YAML: 0.55
-  perl: 5.8.1
-version: 1.01
+version: 1.02
