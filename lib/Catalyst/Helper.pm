@@ -74,6 +74,7 @@ sub mk_app {
     $self->{dir             } =~ s/\:\:/-/g;
     $self->{script          } = File::Spec->catdir( $self->{dir}, 'script' );
     $self->{appprefix       } = Catalyst::Utils::appprefix($name);
+    $self->{appenv          } = Catalyst::Utils::class2env($name);
     $self->{startperl       } = "#!$Config{perlpath} -w";
     $self->{scriptgen       } = $Catalyst::Devel::CATALYST_SCRIPT_GEN || 4;
     $self->{catalyst_version} = $Catalyst::VERSION;
@@ -387,7 +388,7 @@ sub _mk_readme {
 sub _mk_changes {
     my $self = shift;
     my $dir  = $self->{dir};
-    my $time = strftime('%Y-%m-%d %T', localtime time);
+    my $time = strftime('%Y-%m-%d %H:%M:%S', localtime time);
     $self->render_file( 'changes', "$dir\/Changes", { time => $time } );
 }
 
@@ -563,7 +564,7 @@ our $VERSION = '0.01';
 
 # Configure the application. 
 #
-# Note that settings in [% name %].yml (or other external
+# Note that settings in [% appprefix %].yml (or other external
 # configuration file that you set up manually) take precedence
 # over this when using ConfigLoader. Thus configuration
 # details given here can function as a default configuration,
@@ -666,7 +667,7 @@ use inc::Module::Install;
 name '[% dir %]';
 all_from '[% path %]';
 
-requires 'Catalyst' => '[% catalyst_version %]';
+requires 'Catalyst::Runtime' => '[% catalyst_version %]';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
@@ -854,9 +855,9 @@ my $debug             = 0;
 my $fork              = 0;
 my $help              = 0;
 my $host              = undef;
-my $port              = 3000;
+my $port              = $ENV{[% appenv %]_PORT} || $ENV{CATALYST_PORT} || 3000;
 my $keepalive         = 0;
-my $restart           = 0;
+my $restart           = $ENV{[% appenv %]_RELOAD} || $ENV{CATALYST_RELOAD} || 0;
 my $restart_delay     = 1;
 my $restart_regex     = '\.yml$|\.yaml$|\.pm$';
 my $restart_directory = undef;
@@ -878,7 +879,7 @@ GetOptions(
 
 pod2usage(1) if $help;
 
-if ( $restart ) {
+if ( $restart && $ENV{CATALYST_ENGINE} eq 'HTTP' ) {
     $ENV{CATALYST_ENGINE} = 'HTTP::Restarter';
 }
 if ( $debug ) {
@@ -1043,6 +1044,7 @@ pod2usage(1) unless $helper->mk_component( '[% name %]', @ARGV );
 
  Examples:
    [% appprefix %]_create.pl controller My::Controller
+   [% appprefix %]_create.pl controller My::Controller BindLex
    [% appprefix %]_create.pl -mechanize controller My::Controller
    [% appprefix %]_create.pl view My::View
    [% appprefix %]_create.pl view MyView TT
