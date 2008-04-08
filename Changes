@@ -1,5 +1,17 @@
 This file documents the revision history for Perl extension Catalyst-Devel.
 
+1.05	2008-04-07 11:55:00
+        - Add missing parent dependency to created projects.
+1.04	2008-04-06 16:04:00
+        - Update default actions in Root.pm
+        - Patch Helper.pm so Module::Pluggable::Object ignores emacs temp
+          files appropriately for restarting server
+        - Patched Helper.pm so the correct options for mulitple restart
+          directories and symlink resolution will be set in myapp_server.pl
+          (Sebastian Willert)
+        - Change from use Catalyst to use parent and load plugins  in setup call
+        - Remove Catalyst::Manual dependency.
+
 1.03    2007-08-10 08:10:00
         - Changed default dependency to Catalyst::Runtime
         - Added BindLex example to create script
