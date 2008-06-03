@@ -329,7 +329,7 @@ sub _mk_config {
     my $dir       = $self->{dir};
     my $appprefix = $self->{appprefix};
     $self->render_file( 'config',
-        File::Spec->catfile( $dir, "$appprefix.yml" ) );
+        File::Spec->catfile( $dir, "$appprefix.conf" ) );
 }
 
 sub _mk_readme {
@@ -612,7 +612,7 @@ use Catalyst::Runtime '5.70';
 # Set flags and add plugins for the application
 #
 #         -Debug: activates the debug mode for very useful log messages
-#   ConfigLoader: will load the configuration from a YAML file in the
+#   ConfigLoader: will load the configuration from a Config::General file in the
 #                 application's home directory
 # Static::Simple: will serve static files from the application's root 
 #                 directory
@@ -623,7 +623,7 @@ our $VERSION = '0.01';
 
 # Configure the application. 
 #
-# Note that settings in [% appprefix %].yml (or other external
+# Note that settings in [% appprefix %].conf (or other external
 # configuration file that you set up manually) take precedence
 # over this when using ConfigLoader. Thus configuration
 # details given here can function as a default configuration,
@@ -689,18 +689,18 @@ __PACKAGE__->config->{namespace} = '';
 
 =cut
 
-=head2 default
+=head2 index
 
 =cut
 
-sub index : Path Args(0) {
+sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
     # Hello World
     $c->response->body( $c->welcome_message );
 }
 
-sub default : Path {
+sub default :Path {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
@@ -728,6 +728,8 @@ it under the same terms as Perl itself.
 
 1;
 __makefile__
+# IMPORTANT: if you delete this file your app will not work as
+# expected.  you have been warned
 use inc::Module::Install;
 
 name '[% dir %]';
@@ -738,7 +740,7 @@ requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
 requires 'parent';
-requires 'YAML'; # This should reflect the config file format you've chosen
+requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
 catalyst;
 
@@ -746,8 +748,9 @@ install_script glob('script/*.pl');
 auto_install;
 WriteAll;
 __config__
----
-name: [% name %]
+# rename this file to [% name %].yml and put a : in front of "name" if
+# you want to use yaml like in old versions of Catalyst
+name [% name %]
 __readme__
 Run script/[% appprefix %]_server.pl to test the application.
 __changes__
@@ -926,7 +929,7 @@ my $port              = $ENV{[% appenv %]_PORT} || $ENV{CATALYST_PORT} || 3000;
 my $keepalive         = 0;
 my $restart           = $ENV{[% appenv %]_RELOAD} || $ENV{CATALYST_RELOAD} || 0;
 my $restart_delay     = 1;
-my $restart_regex     = '(?:/|^)(?!\.#).+(?:\.yml$|\.yaml$|\.pm)$';
+my $restart_regex     = '(?:/|^)(?!\.#).+(?:\.yml$|\.yaml$|\.conf|\.pm)$';
 my $restart_directory = undef;
 my $follow_symlinks   = 0;
 
@@ -993,7 +996,7 @@ require [% name %];
    -rd -restartdelay  delay between file checks
    -rr -restartregex  regex match files that trigger
                       a restart when modified
-                      (defaults to '\.yml$|\.yaml$|\.pm$')
+                      (defaults to '\.yml$|\.yaml$|\.conf|\.pm$')
    -restartdirectory  the directory to search for
                       modified files, can be set mulitple times
                       (defaults to '[SCRIPT_DIR]/..')
@@ -1173,7 +1176,7 @@ Catalyst [% long_type %].
 
 =cut
 
-sub index : Private {
+sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
     $c->response->body('Matched [% class %] in [%name%].');
