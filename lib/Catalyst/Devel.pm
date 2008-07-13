@@ -3,7 +3,7 @@ package Catalyst::Devel;
 use strict;
 use warnings;
 
-our $VERSION             = '1.07';
+our $VERSION             = '1.08';
 our $CATALYST_SCRIPT_GEN = 31;
 
 =head1 NAME
@@ -29,7 +29,7 @@ L<Catalyst|Catalyst::Runtime>.
 
 =head1 AUTHOR
 
-The Catalyst Core Team - see http://catalyst.perl.org/
+Catalyst Contributors, see Catalyst.pm
 
 =head1 LICENSE
 

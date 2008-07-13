@@ -1,6 +1,6 @@
 --- 
 abstract: Catalyst Development Tools
-author: The Catalyst Core Team - see http://catalyst.perl.org/
+author: Catalyst Contributors, see Catalyst.pm
 distribution_type: module
 generated_by: Module::Install version 0.67
 license: perl
@@ -18,10 +18,10 @@ requires:
   Catalyst::Plugin::ConfigLoader: 0
   Catalyst::Plugin::Static::Simple: 0.16
   Class::Accessor::Fast: 0
+  Config::General: 0
   File::Copy::Recursive: 0
   Module::Install: 0.64
   Path::Class: 0.09
   Template: 2.14
-  YAML: 0.55
   parent: 0
-version: 1.04
+version: 1.08

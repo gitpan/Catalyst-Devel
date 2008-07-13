@@ -585,9 +585,9 @@ To override, please export the AUTHOR variable.
 L<Catalyst::Manual>, L<Catalyst::Test>, L<Catalyst::Request>,
 L<Catalyst::Response>, L<Catalyst>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Sebastian Riedel, C<sri@oook.de>
+Catalyst Contributors, see Catalyst.pm
 
 =head1 LICENSE
 
@@ -618,7 +618,9 @@ use Catalyst::Runtime '5.70';
 #                 directory
 
 use parent qw/Catalyst/;
-
+use Catalyst qw/-Debug
+                ConfigLoader
+                Static::Simple/;
 our $VERSION = '0.01';
 
 # Configure the application. 
@@ -633,7 +635,7 @@ our $VERSION = '0.01';
 __PACKAGE__->config( name => '[% name %]' );
 
 # Start the application
-__PACKAGE__->setup(qw/-Debug ConfigLoader Static::Simple/);
+__PACKAGE__->setup();
 
 
 =head1 NAME
@@ -813,9 +815,9 @@ See L<Catalyst::Manual>
 
 Run a Catalyst application as a cgi script.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Sebastian Riedel, C<sri@oook.de>
+Catalyst Contributors, see Catalyst.pm
 
 =head1 COPYRIGHT
 
@@ -894,10 +896,9 @@ pod2usage(1) if $help;
 
 Run a Catalyst application as fastcgi.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Sebastian Riedel, C<sri@oook.de>
-Maintained by the Catalyst Core Team.
+Catalyst Contributors, see Catalyst.pm
 
 =head1 COPYRIGHT
 
@@ -1010,10 +1011,9 @@ require [% name %];
 
 Run a Catalyst Testserver for this application.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Sebastian Riedel, C<sri@oook.de>
-Maintained by the Catalyst Core Team.
+Catalyst Contributors, see Catalyst.pm
 
 =head1 COPYRIGHT
 
@@ -1065,10 +1065,9 @@ print request($ARGV[0])->content . "\n";
 
 Run a Catalyst action from the command line.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Sebastian Riedel, C<sri@oook.de>
-Maintained by the Catalyst Core Team.
+Catalyst Contributors, see Catalyst.pm
 
 =head1 COPYRIGHT
 
@@ -1141,10 +1140,9 @@ Existing component files are not overwritten.  If any of the component files
 to be created already exist the file will be written with a '.new' suffix.
 This behavior can be suppressed with the C<-force> option.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Sebastian Riedel, C<sri@oook.de>
-Maintained by the Catalyst Core Team.
+Catalyst Contributors, see Catalyst.pm
 
 =head1 COPYRIGHT
 
