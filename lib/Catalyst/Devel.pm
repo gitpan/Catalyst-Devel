@@ -3,8 +3,8 @@ package Catalyst::Devel;
 use strict;
 use warnings;
 
-our $VERSION             = '1.08';
-our $CATALYST_SCRIPT_GEN = 31;
+our $VERSION             = '1.09';
+our $CATALYST_SCRIPT_GEN = 32;
 
 =head1 NAME
 
@@ -30,6 +30,10 @@ L<Catalyst|Catalyst::Runtime>.
 =head1 AUTHOR
 
 Catalyst Contributors, see Catalyst.pm
+
+=head1 PROJECT FOUNDER
+
+sri: Sebastian Riedel <sri@cpan.org>
 
 =head1 LICENSE
 

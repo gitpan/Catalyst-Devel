@@ -499,8 +499,8 @@ So when you call C<scripts/myapp_create.pl view MyView TT>, create
 will try to execute Catalyst::Helper::View::TT->mk_compclass and
 Catalyst::Helper::View::TT->mk_comptest.
 
-See L<Catalyst::Helper::View::TT> and L<Catalyst::Helper::Model::DBIC> for
-examples.
+See L<Catalyst::Helper::View::TT> and
+L<Catalyst::Helper::Model::DBIC::Schema> for examples.
 
 All helper classes should be under one of the following namespaces.
 
@@ -544,36 +544,41 @@ There is no fallback for this method.
 These are the methods that the Helper classes can call on the
 <$helper> object passed to them.
 
-=head2 render_file
+=head2 render_file ($file, $path, $vars)
 
-Render and create a file from a template in DATA using 
-Template Toolkit.
+Render and create a file from a template in DATA using Template
+Toolkit. $file is the relevent chunk of the __DATA__ section, $path is
+the path to the file and $vars is the hashref as expected by
+L<Template Toolkit|Template>.
 
-=head2 get_file
+=head2 get_file ($class, $file)
 
 Fetch file contents from the DATA section. This is used internally by
-L</render_file>.
+L</render_file>.  $class is the name of the class to get the DATA
+section from.  __PACKAGE__ or ( caller(0) )[0] might be sensible
+values for this.
 
 =head2 mk_app
 
 Create the main application skeleton. This is called by L<catalyst.pl>.
 
-=head2 mk_component
+=head2 mk_component ($app)
 
 This method is called by L<create.pl> to make new components
 for your application.
 
-=head3 mk_dir
+=head3 mk_dir ($path)
 
 Surprisingly, this function makes a directory.
 
-=head2 mk_file
+=head2 mk_file ($file, $content)
 
 Writes content to a file. Called by L</render_file>.
 
-=head2 next_test
+=head2 next_test ($test_name)
 
 Calculates the name of the next numbered test file and returns it.
+Don't give the number or the .t suffix for the test name.
 
 =head1 NOTE
 
@@ -614,7 +619,7 @@ use Catalyst::Runtime '5.70';
 #         -Debug: activates the debug mode for very useful log messages
 #   ConfigLoader: will load the configuration from a Config::General file in the
 #                 application's home directory
-# Static::Simple: will serve static files from the application's root 
+# Static::Simple: will serve static files from the application's root
 #                 directory
 
 use parent qw/Catalyst/;
@@ -623,13 +628,13 @@ use Catalyst qw/-Debug
                 Static::Simple/;
 our $VERSION = '0.01';
 
-# Configure the application. 
+# Configure the application.
 #
 # Note that settings in [% appprefix %].conf (or other external
 # configuration file that you set up manually) take precedence
 # over this when using ConfigLoader. Thus configuration
 # details given here can function as a default configuration,
-# with a external configuration file acting as an override for
+# with an external configuration file acting as an override for
 # local deployment.
 
 __PACKAGE__->config( name => '[% name %]' );
@@ -706,14 +711,13 @@ sub default :Path {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
-    
 }
 
 =head2 end
 
 Attempt to render a view, if needed.
 
-=cut 
+=cut
 
 sub end : ActionClass('RenderView') {}
 
@@ -841,7 +845,7 @@ use [% name %];
 
 my $help = 0;
 my ( $listen, $nproc, $pidfile, $manager, $detach, $keep_stderr );
- 
+
 GetOptions(
     'help|?'      => \$help,
     'listen|l=s'  => \$listen,
@@ -854,10 +858,10 @@ GetOptions(
 
 pod2usage(1) if $help;
 
-[% name %]->run( 
-    $listen, 
+[% name %]->run(
+    $listen,
     {   nproc   => $nproc,
-        pidfile => $pidfile, 
+        pidfile => $pidfile,
         manager => $manager,
         detach  => $detach,
 	keep_stderr => $keep_stderr,
@@ -873,7 +877,7 @@ pod2usage(1) if $help;
 =head1 SYNOPSIS
 
 [% appprefix %]_fastcgi.pl [options]
- 
+
  Options:
    -? -help      display this help and exits
    -l -listen    Socket path to listen on
@@ -909,11 +913,11 @@ it under the same terms as Perl itself.
 __server__
 [% startperl %]
 
-BEGIN { 
+BEGIN {
     $ENV{CATALYST_ENGINE} ||= 'HTTP';
     $ENV{CATALYST_SCRIPT_GEN} = [% scriptgen %];
     require Catalyst::Engine::HTTP;
-}  
+}
 
 use strict;
 use warnings;
@@ -1082,7 +1086,19 @@ use strict;
 use warnings;
 use Getopt::Long;
 use Pod::Usage;
-use Catalyst::Helper;
+eval "use Catalyst::Devel;";
+
+if ($@) {
+  die <<END;
+To use the Catalyst development tools including catalyst.pl and the
+generated script/myapp_create.pl you need Catalyst::Helper, which is
+part of the Catalyst-Devel distribution. Please install this via a
+vendor package or by running one of -
+
+  perl -MCPAN -e 'install Catalyst::Devel'
+  perl -MCPANPLUS -e 'install Catalyst::Devel'
+END
+}
 
 my $force = 0;
 my $mech  = 0;
@@ -1170,7 +1186,7 @@ Catalyst [% long_type %].
 =cut
 
 
-=head2 index 
+=head2 index
 
 =cut
 
