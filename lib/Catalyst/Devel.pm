@@ -3,8 +3,8 @@ package Catalyst::Devel;
 use strict;
 use warnings;
 
-our $VERSION             = '1.10';
-our $CATALYST_SCRIPT_GEN = 32;
+our $VERSION             = '1.11';
+our $CATALYST_SCRIPT_GEN = 33;
 
 =head1 NAME
 
@@ -37,7 +37,7 @@ sri: Sebastian Riedel <sri@cpan.org>
 
 =head1 LICENSE
 
-This library is free software, you can redistribute it and/or modify
+This library is free software. You can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
