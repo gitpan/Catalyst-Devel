@@ -1,4 +1,4 @@
-use inc::Module::Install 0.64;
+use inc::Module::Install 0.87;
 
 name     'Catalyst-Devel';
 all_from 'lib/Catalyst/Devel.pm';
@@ -8,7 +8,7 @@ requires 'Catalyst::Action::RenderView' => '0.04';
 requires 'Catalyst::Plugin::Static::Simple' => '0.16';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Class::Accessor::Fast';
-requires 'Config::General'; # as of 1.07, we use .conf and not .yaml
+requires 'Config::General' => '2.42'; # as of 1.07, we use .conf and not .yaml
 requires 'File::Copy::Recursive';
 requires 'Module::Install' => '0.64';
 requires 'parent'; # as of 1.04
@@ -57,6 +57,27 @@ EOE
     }
 }
 
+# kill warning from older versions of Class::C3
+if ($] >= 5.009_005 && can_use('Class::C3') && !can_use('Class::C3', 0.20)) {
+    requires 'Class::C3' => '0.20';
+}
+
 auto_install;
 
 WriteAll;
+
+if ($Module::Install::AUTHOR) {
+    Meta->{values}{resources} = [
+        [ 'MailingList' => 'http://lists.scsys.co.uk/cgi-bin/mailman/listinfo/catalyst' ],
+        [ 'IRC'         => 'irc://irc.perl.org/#catalyst' ],
+        [ 'license',    => 'http://dev.perl.org/licenses/' ],
+        [ 'homepage',   => 'http://dev.catalyst.perl.org/'],
+        [ 'repository', => 'http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Devel/' ],
+    ];
+
+    Meta->{values}{requires} = [ grep {
+        $_->[0] ne 'Class::C3'
+    } @{ Meta->{values}{requires} } ];
+
+    Meta->write;
+}
