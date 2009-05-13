@@ -648,7 +648,7 @@ package [% name %];
 use strict;
 use warnings;
 
-use Catalyst::Runtime '5.70';
+use Catalyst::Runtime 5.70;
 
 # Set flags and add plugins for the application
 #
@@ -992,7 +992,7 @@ GetOptions(
     'restartdirectory=s@' => \$watch_directory,
     'followsymlinks'      => \$follow_symlinks,
     'background'          => \$background,
-    'pidfile|p=s'         => \$pidfile,
+    'pidfile=s'           => \$pidfile,
 );
 
 pod2usage(1) if $help;
@@ -1084,6 +1084,8 @@ else {
    -follow_symlinks   follow symlinks in search directories
                       (defaults to false. this is a no-op on Win32)
    -background        run the process in the background
+   -pidfile           specify filename for pid file
+
  See also:
    perldoc Catalyst::Manual
    perldoc Catalyst::Manual::Intro
