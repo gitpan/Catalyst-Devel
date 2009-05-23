@@ -1,12 +1,22 @@
 This file documents the revision history for Perl extension Catalyst-Devel.
 
+1.16    2009-05-23 17:29:29
+        - Catalyst prereq changed to 5.80. Thanks, kold! (jhannah)
+        - Fixed the restarter to actually work on Win32. The fix means
+          that the restarter is as slow as ever on Win32, but it
+          works. Thanks to Rodrigo for the bug report and suggestion
+          on how to fix it. (Dave Rolsky)
+        - Actually fix -p option for port number, as I failed to do it
+          right last time as I'm an idiot (t0m)
+
 1.15    2009-05-13 20:02
         - Remove -p option for pid file, and restore it to the port number,
           as it should be -port|-p (t0m)
         - Document -pidfile in myapp_server.pl POD (t0m)
 
 1.14_02 2009-05-11 04:29
-        - Small changes to work with File::ChangeNotify 0.03.
+        - Small changes to work with File::ChangeNotify 0.03. (Dave
+          Rolsky)
 
 1.14_01 2009-05-11 03:45
         - This release moves the restarter functionality into a new
@@ -28,6 +38,7 @@ This file documents the revision history for Perl extension Catalyst-Devel.
           changed files. As of this writing, it currently ships with a
           file watcher that uses inotify on Linux systems, and a
           default fallback class that does everything in pure Perl.
+          (Dave Rolsky)
 
 1.13    2009-05-11 02:50
         - add [-pidfile|-p] option for myapp_server.pl (caelum)

@@ -23,6 +23,25 @@ has _child => (
     isa => 'Int',
 );
 
+sub pick_subclass {
+    my $class = shift;
+
+    my $subclass;
+    $subclass =
+        defined $ENV{CATALYST_RESTARTER}
+            ? $ENV{CATALYST_RESTARTER}
+            :  $^O eq 'MSWin32'
+            ? 'Win32'
+            : 'Forking';
+
+    $subclass = 'Catalyst::Restarter::' . $subclass;
+
+    eval "use $subclass";
+    die $@ if $@;
+
+    return $subclass;
+}
+
 sub BUILD {
     my $self = shift;
     my $p    = shift;
@@ -45,17 +64,6 @@ sub run_and_watch {
     return unless $self->_child;
 
     $self->_restart_on_changes;
-}
-
-sub _fork_and_start {
-    my $self = shift;
-
-    if ( my $pid = fork ) {
-        $self->_child($pid);
-    }
-    else {
-        $self->start_sub->();
-    }
 }
 
 sub _restart_on_changes {
@@ -89,22 +97,6 @@ sub _handle_events {
     $self->_restart_on_changes;
 }
 
-sub _kill_child {
-    my $self = shift;
-
-    return unless $self->_child;
-
-    return unless kill 0, $self->_child;
-
-    local $SIG{CHLD} = 'IGNORE';
-    unless ( kill 'INT', $self->_child ) {
-        # The kill 0 thing does not work on Windows, but the restarter
-        # seems to work fine on Windows with this hack.
-        return if $^O eq 'MSWin32';
-        die "Cannot send INT signal to ", $self->_child, ": $!";
-    }
-}
-
 sub DEMOLISH {
     my $self = shift;
 
@@ -123,7 +115,9 @@ Catalyst::Restarter - Uses File::ChangeNotify to check for changed files and res
 
 =head1 SYNOPSIS
 
-    my $restarter = Catalyst::Restarter->new(
+    my $class = Catalyst::Restarter->pick_subclass;
+
+    my $restarter = $class->new(
         directories => '/path/to/MyApp',
         regex       => '\.yml$|\.yaml$|\.conf|\.pm$',
         start_sub => sub { ... }
@@ -133,15 +127,24 @@ Catalyst::Restarter - Uses File::ChangeNotify to check for changed files and res
 
 =head1 DESCRIPTION
 
+This is the base class for all restarters, and it also provide
+functionality for picking an appropriate restarter subclass for a
+given platform.
+
 This class uses L<File::ChangeNotify> to watch one or more directories
 of files and restart the Catalyst server when any of those files
 changes.
 
 =head1 METHODS
 
+=head2 pick_subclass
+
+Returns the name of an appropriate subclass for the given platform.
+
 =head2 new ( start_sub => sub { ... }, ... )
 
-This method creates a new restarter object.
+This method creates a new restarter object, but should be called on a
+subclass, not this class.
 
 The "start_sub" argument is required. This is a subroutine reference
 that can be used to start the Catalyst server.

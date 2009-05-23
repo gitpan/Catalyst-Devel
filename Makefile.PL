@@ -3,7 +3,7 @@ use inc::Module::Install 0.87;
 name     'Catalyst-Devel';
 all_from 'lib/Catalyst/Devel.pm';
 
-requires 'Catalyst'    => '5.7000';
+requires 'Catalyst'    => '5.8000';
 requires 'Catalyst::Action::RenderView' => '0.04';
 requires 'Catalyst::Plugin::Static::Simple' => '0.16';
 requires 'Catalyst::Plugin::ConfigLoader';
@@ -15,6 +15,13 @@ requires 'Module::Install' => '0.64';
 requires 'parent'; # as of 1.04
 requires 'Path::Class' => '0.09';
 requires 'Template'    => '2.14';
+
+if ( $^O eq 'MSWin32' ) {
+    # Proc::Background needs this on Win32 but doesn't actually
+    # require it, if it's missing it just dies in the Makefile.PL.
+    requires 'Win32::Process' => '0.04';
+    requires 'Proc::Background';
+}
 
 if (!$ENV{CATALYST_DEVEL_NO_510_CHECK}) {
     use Symbol 'gensym';
