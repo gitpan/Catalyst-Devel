@@ -1,8 +1,17 @@
 This file documents the revision history for Perl extension Catalyst-Devel.
 
+1.18    2009-06-10 17:43:12
+        - The forking restarter was not waiting for the child to exit,
+          which could lead to a race condition. If the old child did
+          not exit before the new child tried to bind to its socket,
+          it would find the old child blocking the port it wanted.
+        - More fixes for the Win32 restarter. It was effectively
+          ignoring all command-line options except those related to
+          the restarter itself.
+
 1.17    2009-05-24 18:18:17
         - Catalyst::Restarter::Forking loaded the threads and
-          Thread::Cancel module, even though it doesn't need them.
+          Thread::Cancel modules, even though it doesn't need them.
 
 1.16    2009-05-23 17:29:29
         - Catalyst prereq changed to 5.80. Thanks, kold! (jhannah)

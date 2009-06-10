@@ -7,7 +7,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: 'Module::Install version 0.90'
+generated_by: 'Module::Install version 0.91'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -26,7 +26,7 @@ requires:
   Config::General: 2.42
   File::ChangeNotify: 0.03
   File::Copy::Recursive: 0
-  Module::Install: 0.64
+  Module::Install: 0.91
   Path::Class: 0.09
   Template: 2.14
   parent: 0
@@ -36,4 +36,4 @@ resources:
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
   repository: http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Devel/
-version: 1.17
+version: 1.18
