@@ -30,6 +30,7 @@ requires:
   File::ShareDir: 0
   Module::Install: 0.91
   Moose: 0
+  MooseX::Emulate::Class::Accessor::Fast: 0
   Path::Class: 0.09
   Template: 2.14
   namespace::autoclean: 0
@@ -40,4 +41,4 @@ resources:
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
   repository: http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Devel/
-version: 1.21_01
+version: 1.22
