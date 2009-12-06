@@ -3,7 +3,8 @@ package Catalyst::Devel;
 use strict;
 use warnings;
 
-our $VERSION             = '1.22';
+# Change Catalyst::Helper also.
+our $VERSION             = '1.23';
 $VERSION = eval $VERSION;
 our $CATALYST_SCRIPT_GEN = 40;
 
