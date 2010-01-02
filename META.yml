@@ -40,5 +40,5 @@ resources:
   MailingList: http://lists.scsys.co.uk/cgi-bin/mailman/listinfo/catalyst
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
-  repository: http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Devel/
-version: 1.24
+  repository: git://git.shadowcat.co.uk/catagits/Catalyst-Devel.git
+version: 1.25
