@@ -23,7 +23,7 @@ requires:
   Catalyst: 5.8001402
   Catalyst::Action::RenderView: 0.10
   Catalyst::Plugin::ConfigLoader: 0.23
-  Catalyst::Plugin::Static::Simple: 0.21
+  Catalyst::Plugin::Static::Simple: 0.28
   Config::General: 2.42
   File::ChangeNotify: 0.07
   File::Copy::Recursive: 0
@@ -41,4 +41,4 @@ resources:
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
   repository: git://git.shadowcat.co.uk/catagits/Catalyst-Devel.git
-version: 1.25
+version: 1.26
