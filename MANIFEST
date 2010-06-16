@@ -62,3 +62,4 @@ t/lib/UnknownError.pm
 t/optional_http-server-restart.t
 t/render_file_contents.t
 t/render_share_dir_file.t
+xt/version_numbers.t

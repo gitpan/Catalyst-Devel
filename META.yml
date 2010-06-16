@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: 'Module::Install version 0.93'
+generated_by: 'Module::Install version 0.99'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,12 +19,14 @@ no_index:
     - inc
     - share
     - t
+    - xt
 requires:
   Catalyst: 5.80015
   Catalyst::Action::RenderView: 0.10
   Catalyst::Plugin::ConfigLoader: 0.23
   Catalyst::Plugin::Static::Simple: 0.28
   Config::General: 2.42
+  ExtUtils::MakeMaker: 6.11
   File::ChangeNotify: 0.07
   File::Copy::Recursive: 0
   File::ShareDir: 0
@@ -33,6 +35,7 @@ requires:
   MooseX::Emulate::Class::Accessor::Fast: 0
   Path::Class: 0.09
   Template: 2.14
+  Test::More: 0.94
   namespace::autoclean: 0
   namespace::clean: 0
 resources:
@@ -41,4 +44,4 @@ resources:
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
   repository: git://git.shadowcat.co.uk/catagits/Catalyst-Devel.git
-version: 1.27
+version: 1.28
