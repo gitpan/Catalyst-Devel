@@ -23,7 +23,7 @@ no_index:
 requires:
   Catalyst: 5.80015
   Catalyst::Action::RenderView: 0.10
-  Catalyst::Plugin::ConfigLoader: 0.23
+  Catalyst::Plugin::ConfigLoader: 0.30
   Catalyst::Plugin::Static::Simple: 0.28
   Config::General: 2.42
   ExtUtils::MakeMaker: 6.11
@@ -44,4 +44,4 @@ resources:
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
   repository: git://git.shadowcat.co.uk/catagits/Catalyst-Devel.git
-version: 1.29
+version: 1.30
