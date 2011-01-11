@@ -13,12 +13,13 @@ use Catalyst::Utils;
 use Catalyst::Exception;
 use Path::Class qw/dir file/;
 use File::ShareDir qw/dist_dir/;
+use YAML::Tiny;
 use namespace::autoclean;
 
 with 'MooseX::Emulate::Class::Accessor::Fast';
 
 # Change Catalyst/Devel.pm also
-our $VERSION = '1.28';
+our $VERSION = '1.29';
 
 my %cache;
 
@@ -78,13 +79,31 @@ sub mk_app {
     # Needs to be here for PAR
     require Catalyst;
 
+    if($name eq '.') {
+        if(!-e 'META.yml') {
+            system perl => 'Makefile.PL'
+                and Catalyst::Exception->throw(message => q(
+                    Failed to run "perl Makefile.PL".
+                ));
+        }
+
+        $name = YAML::Tiny->read('META.yml')->[0]->{'name'};
+        $name =~ s/-/::/g;
+        $self->{dir} = '.';
+    }
+
     if ( $name =~ /[^\w:]/ || $name =~ /^\d/ || $name =~ /\b:\b|:{3,}/) {
         warn "Error: Invalid application name.\n";
         return 0;
     }
+
+
+    if(!defined $self->{'dir'}) {
+        $self->{dir} = $name;
+        $self->{dir} =~ s/\:\:/-/g;
+    }
+
     $self->{name            } = $name;
-    $self->{dir             } = $name;
-    $self->{dir             } =~ s/\:\:/-/g;
     $self->{script          } = dir( $self->{dir}, 'script' );
     $self->{appprefix       } = Catalyst::Utils::appprefix($name);
     $self->{appenv          } = Catalyst::Utils::class2env($name);
@@ -93,7 +112,7 @@ sub mk_app {
                                 : "#!$Config{perlpath}";
     $self->{scriptgen       } = $Catalyst::Devel::CATALYST_SCRIPT_GEN;
     $self->{catalyst_version} = $Catalyst::VERSION;
-    $self->{author          } = $self->{author} = $ENV{'AUTHOR'}
+    $self->{author          } ||= $ENV{'AUTHOR'}
       || eval { @{ [ getpwuid($<) ] }[6] }
       || 'Catalyst developer';
 
@@ -103,7 +122,8 @@ sub mk_app {
 
     if ($gen_app) {
         for ( qw/ _mk_dirs _mk_config _mk_appclass _mk_rootclass _mk_readme
-              _mk_changes _mk_apptest _mk_images _mk_favicon/ ) {
+              _mk_changes _mk_apptest _mk_podtest _mk_podcoveragetest
+              _mk_images _mk_favicon/ ) {
             
             $self->$_;
         }
@@ -405,7 +425,17 @@ sub _mk_apptest {
     my $self = shift;
     my $t    = $self->{t};
     $self->render_sharedir_file( file('t', '01app.t.tt'),         file($t, "01app.t") );
+}
+
+sub _mk_podtest {
+    my $self = shift;
+    my $t    = $self->{t};
     $self->render_sharedir_file( file('t', '02pod.t.tt'),         file($t, "02pod.t") );
+}
+
+sub _mk_podcoveragetest {
+    my $self = shift;
+    my $t    = $self->{t};
     $self->render_sharedir_file( file('t', '03podcoverage.t.tt'), file($t, "03podcoverage.t") );
 }
 
