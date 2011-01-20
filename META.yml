@@ -19,7 +19,6 @@ no_index:
     - inc
     - share
     - t
-    - xt
 requires:
   Catalyst: 5.80015
   Catalyst::Action::RenderView: 0.10
@@ -44,4 +43,4 @@ resources:
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
   repository: git://git.shadowcat.co.uk/catagits/Catalyst-Devel.git
-version: 1.30
+version: 1.31

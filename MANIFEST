@@ -2,6 +2,7 @@ Changes
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
 inc/Module/Install/AuthorRequires.pm
+inc/Module/Install/AuthorTests.pm
 inc/Module/Install/AutoInstall.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
@@ -48,8 +49,9 @@ share/t/02pod.t.tt
 share/t/03podcoverage.t.tt
 share/t/comptest.tt
 t/01use.t
-t/02pod.t
-t/03podcoverage.t
+t/author/pod.t
+t/author/podcoverage.t
+t/author/version_numbers.t
 t/back_compat.t
 t/generated_app.t
 t/get_sharedir_file.t
@@ -62,4 +64,3 @@ t/lib/UnknownError.pm
 t/optional_http-server-restart.t
 t/render_file_contents.t
 t/render_share_dir_file.t
-xt/version_numbers.t
