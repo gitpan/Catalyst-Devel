@@ -28,6 +28,7 @@ share/lib/MyApp.pm.tt
 share/lib/MyApp/Controller/Root.pm.tt
 share/Makefile.PL.tt
 share/myapp.conf.tt
+share/myapp.psgi.tt
 share/README.tt
 share/root/favicon.ico.bin
 share/root/static/images/btn_120x50_built.png.bin
