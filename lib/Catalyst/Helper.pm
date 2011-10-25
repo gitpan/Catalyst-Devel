@@ -19,7 +19,7 @@ use namespace::autoclean;
 with 'MooseX::Emulate::Class::Accessor::Fast';
 
 # Change Catalyst/Devel.pm also
-our $VERSION = '1.34';
+our $VERSION = '1.36';
 
 my %cache;
 
@@ -388,7 +388,7 @@ sub _mk_rootclass {
 
 sub _mk_makefile {
     my $self = shift;
-    $self->{path} = dir( 'lib', split( '::', $self->{name} ) );
+    $self->{path} = join('/', 'lib', split( '::', $self->{name} ) );
     $self->{path} .= '.pm';
     my $dir = $self->{dir};
     $self->render_sharedir_file( 'Makefile.PL.tt', file($dir, "Makefile.PL") );
