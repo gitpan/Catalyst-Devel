@@ -19,7 +19,7 @@ use namespace::autoclean;
 with 'MooseX::Emulate::Class::Accessor::Fast';
 
 # Change Catalyst/Devel.pm also
-our $VERSION = '1.36';
+our $VERSION = '1.37';
 
 my %cache;
 
@@ -49,7 +49,7 @@ sub get_sharedir_file {
     }
     my $file = file( $dist_dir, @filename);
     Carp::confess("Cannot find $file") unless -r $file;
-    my $contents = $file->slurp;
+    my $contents = $file->slurp(iomode =>  "<:raw");
     return $contents;
 }
 
