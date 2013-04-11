@@ -43,5 +43,5 @@ resources:
   homepage: http://dev.catalyst.perl.org/
   license: http://dev.perl.org/licenses/
   repository: git://git.shadowcat.co.uk/catagits/Catalyst-Devel.git
-version: 1.37
-x_authority: MSTROUT
+version: 1.38
+x_authority: cpan:MSTROUT
